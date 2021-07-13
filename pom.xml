@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>ru.bangerok.enterprise</groupId>
+    <artifactId>ninja-template</artifactId>
+    <version>0.0.0</version>
+    <packaging>pom</packaging>
+    <name>Ninja Template name</name>
+    <description>The main POM file that connects and configures the project modules.</description>
+    <url>https://github.com/NinjaEnterprise/NinjaTemplate</url>
+
+    <organization>
+        <name>Vladislav Kuznetsov</name>
+        <url>https://vk.com/vladislav_kuznetsov</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <id>bangerok</id>
+            <name>Vladislav Kuznetsov</name>
+            <email>kuznetsov.v.a.work@gmail.com</email>
+            <timezone>+3</timezone>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <profiles>
+        <profile>
+            <id>all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>ninja-template-module-one</module>
+            </modules>
+        </profile>
+    </profiles>
+
+    <properties>
+        <!-- Ninja Modules -->
+        <ninja-template.version>0.0.0</ninja-template.version>
+
+        <!-- Compiler -->
+        <java.version>16</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Dependencies -->
+        <lombok.version>1.18.20</lombok.version>
+
+        <!-- Plugins -->
+        <checkstyle-plugin.version>3.1.2</checkstyle-plugin.version>
+        <puppycrawl.checkstyle.version>8.43</puppycrawl.checkstyle.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <lombok-mapstruct.version>0.1.0</lombok-mapstruct.version>
+        <spring-boot.version>2.5.1</spring-boot.version>
+        <maven-compiler.version>3.8.1</maven-compiler.version>
+
+        <!-- Sonar Cloud -->
+        <sonar.projectKey>NinjaEnterprise_NinjaTemplate</sonar.projectKey>
+        <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+        <sonar.organization>ninja-enterprise</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.sources>src/main/java,src/main/resources</sonar.sources>
+        <sonar.java.binaries>target/classes</sonar.java.binaries>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Mapstruct -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- Ninja modules -->
+            <dependency>
+                <groupId>ru.bangerok.enterprise</groupId>
+                <artifactId>ninja-template-module-one</artifactId>
+                <version>${ninja-template.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>${puppycrawl.checkstyle.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <configLocation>google-check-style.xml</configLocation>
+                    <violationSeverity>warning</violationSeverity>
+                    <consoleOutput>true</consoleOutput>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok-mapstruct-binding</artifactId>
+                                <version>${lombok-mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                        <compilerArgs>
+                            <compilerArg>
+                                -Amapstruct.defaultComponentModel=spring
+                            </compilerArg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

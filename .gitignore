@@ -1,0 +1,13 @@
+### Intellij Idea ###
+/.idea
+**/*.iml
+
+### Maven ###
+**/target/
+
+### Node files ###
+package-lock.json
+**/node*/
+
+### Docker ###
+docker/postgresql/data

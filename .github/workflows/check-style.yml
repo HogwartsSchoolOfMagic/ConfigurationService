@@ -1,0 +1,24 @@
+name: CheckStyle
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    name: checking
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - name: Check Style with Maven
+      run: mvn -B clean checkstyle:check
