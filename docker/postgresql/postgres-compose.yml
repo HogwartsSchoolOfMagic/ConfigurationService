@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  config-database:
+    container_name: $APPLICATION_NAME-postgres
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
+    environment:
+      POSTGRES_DB: $PG_DBNAME
+      POSTGRES_USER: $PG_USER
+      POSTGRES_PASSWORD: $PG_PASSWORD
+    volumes:
+      - type: bind
+        source: ./data
+        target: /var/lib/postgresql/data
+    ports:
+      - $PG_PORT:5432
+    restart: always
+    command: "postgres -c max_prepared_transactions=150 -c max_connections=150"

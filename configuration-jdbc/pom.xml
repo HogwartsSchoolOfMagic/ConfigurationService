@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>ninja-configuration</artifactId>
+    <groupId>ru.bangerok.enterprise</groupId>
+    <version>0.0.1</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>configuration-jdbc</artifactId>
+  <version>0.0.1</version>
+  <name>Configuration Service JDBC</name>
+  <description>Database for JDBC backend</description>
+
+  <dependencies>
+    <!-- Configuration Service: modules -->
+    <dependency>
+      <groupId>ru.bangerok.enterprise</groupId>
+      <artifactId>configuration-api</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+
+    <!-- Database connection -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- liquibase -->
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Hibernate annotations for validation -->
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Mapstruct -->
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Spring Boot: data -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+  </dependencies>
+</project>
