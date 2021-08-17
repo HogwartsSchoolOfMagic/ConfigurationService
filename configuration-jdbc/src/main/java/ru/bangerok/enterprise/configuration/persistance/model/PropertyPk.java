@@ -1,9 +1,9 @@
 package ru.bangerok.enterprise.configuration.persistance.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,9 +17,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 @Embeddable
-public class ConfigurationPropertyPk implements Serializable {
+public class PropertyPk implements Serializable {
 
   /**
    * The name of the application to which the configuration belongs.
@@ -41,4 +40,23 @@ public class ConfigurationPropertyPk implements Serializable {
    */
   @NotNull
   private String key;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof PropertyPk that)) {
+      return false;
+    }
+    return getApplication().equals(that.getApplication())
+        && getProfile().equals(that.getProfile())
+        && getLabel().equals(that.getLabel())
+        && getKey().equals(that.getKey());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getApplication(), getProfile(), getLabel(), getKey());
+  }
 }

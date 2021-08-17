@@ -6,11 +6,11 @@
   <parent>
     <artifactId>ninja-configuration</artifactId>
     <groupId>ru.bangerok.enterprise</groupId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
   </parent>
 
   <artifactId>configuration-api</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.1</version>
   <name>Configuration Service API</name>
   <description>General API for all modules</description>
 </project>

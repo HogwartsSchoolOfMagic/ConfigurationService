@@ -6,11 +6,11 @@
   <parent>
     <artifactId>ninja-configuration</artifactId>
     <groupId>ru.bangerok.enterprise</groupId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
   </parent>
 
   <artifactId>configuration-server</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.0</version>
   <name>Configuration Service Server</name>
   <description>Server for starting all modules and working with Spring Cloud</description>
 

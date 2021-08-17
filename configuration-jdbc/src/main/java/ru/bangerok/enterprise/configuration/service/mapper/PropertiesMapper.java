@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.bangerok.enterprise.configuration.dto.ConfigurationProperty;
-import ru.bangerok.enterprise.configuration.dto.NewConfigurationProperties;
-import ru.bangerok.enterprise.configuration.persistance.model.ConfigurationPropertyEntity;
+import ru.bangerok.enterprise.configuration.dto.NewPropertiesDto;
+import ru.bangerok.enterprise.configuration.dto.PropertyDto;
+import ru.bangerok.enterprise.configuration.persistance.model.Property;
 
 /**
  * Mapping for configuration properties.
@@ -29,7 +29,7 @@ public interface PropertiesMapper {
   @Mapping(source = "id.profile", target = "profile")
   @Mapping(source = "id.label", target = "label")
   @Mapping(source = "id.key", target = "key")
-  ConfigurationProperty toDto(ConfigurationPropertyEntity entity);
+  PropertyDto toDto(Property entity);
 
   /**
    * Converting a list of entities to a list of DTO objects.
@@ -37,8 +37,8 @@ public interface PropertiesMapper {
    * @param entities list of entities.
    * @return the resulting DTO list.
    */
-  default List<ConfigurationProperty> toDto(Collection<ConfigurationPropertyEntity> entities) {
-    return entities.stream().map(this::toDto).collect(Collectors.toList());
+  default List<PropertyDto> toDto(Collection<Property> entities) {
+    return entities.stream().map(this::toDto).toList();
   }
 
   /**
@@ -47,17 +47,17 @@ public interface PropertiesMapper {
    * @param newPropertiesDto data for conversion.
    * @return the resulting list of entities.
    */
-  default List<ConfigurationProperty> toDto(NewConfigurationProperties newPropertiesDto) {
+  default List<PropertyDto> toDto(NewPropertiesDto newPropertiesDto) {
     return newPropertiesDto.getKeysValues().entrySet().stream()
         .map((Map.Entry<String, String> entry) -> {
-          var property = new ConfigurationProperty();
+          var property = new PropertyDto();
           property.setApplication(newPropertiesDto.getApplication());
           property.setProfile(newPropertiesDto.getProfile());
           property.setLabel(newPropertiesDto.getLabel());
           property.setKey(entry.getKey());
           property.setValue(entry.getValue());
           return property;
-        }).collect(Collectors.toList());
+        }).toList();
   }
 
   /**
@@ -71,5 +71,5 @@ public interface PropertiesMapper {
   @Mapping(source = "profile", target = "id.profile")
   @Mapping(source = "label", target = "id.label")
   @Mapping(source = "key", target = "id.key")
-  ConfigurationPropertyEntity toEntity(ConfigurationProperty dto);
+  Property toEntity(PropertyDto dto);
 }

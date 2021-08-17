@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.bangerok.enterprise.configuration.dto.ConfigurationProperty;
-import ru.bangerok.enterprise.configuration.dto.NewConfigurationProperties;
-import ru.bangerok.enterprise.configuration.dto.SearchConfigurationProperty;
+import ru.bangerok.enterprise.configuration.dto.NewPropertiesDto;
+import ru.bangerok.enterprise.configuration.dto.PropertyDto;
+import ru.bangerok.enterprise.configuration.dto.SearchPropertyDto;
 
 /**
  * Feign is an interface containing methods for execution in other services and modules.
@@ -23,17 +23,17 @@ import ru.bangerok.enterprise.configuration.dto.SearchConfigurationProperty;
 public interface ConfigurationClient {
 
   /**
-   * Search configuration properties by key, description, or value.
+   * Search configuration properties by key, description or value.
    *
-   * @param searchConfigurationProperty data for searching configuration properties.
-   * @param sortField                   field for sorting properties (for the first four fields
-   *                                    mentioned above - you need to use the 'id' prefix).
-   * @param sortType                    sort type: {@code 'asc' or 'desc'}.
+   * @param searchPropertyDto data for searching configuration properties.
+   * @param sortField         field for sorting properties (for the first four fields
+   *                          mentioned above — you need to use the 'id' prefix).
+   * @param sortType          sort type: {@code 'asc' or 'desc'}.
    * @return list of found configuration properties.
    */
   @PostMapping("/get-all")
-  List<ConfigurationProperty> findAll(
-      @RequestBody SearchConfigurationProperty searchConfigurationProperty,
+  List<PropertyDto> findAll(
+      @RequestBody SearchPropertyDto searchPropertyDto,
       @RequestParam(required = false, defaultValue = "id.application") String sortField,
       @RequestParam(required = false, defaultValue = "asc") String sortType
   );
@@ -41,46 +41,46 @@ public interface ConfigurationClient {
   /**
    * Create configuration properties for individual application, profile and label.
    *
-   * @param newPropertiesData configuration properties data.
+   * @param newPropertiesDtoData configuration properties data.
    * @return list of generated configuration properties.
    */
   @PostMapping("/create-all")
-  List<ConfigurationProperty> createAll(@RequestBody NewConfigurationProperties newPropertiesData);
+  List<PropertyDto> createAll(@RequestBody NewPropertiesDto newPropertiesDtoData);
 
   /**
-   * Saving configuration properties for an individual application, profile, and label.
+   * Saving configuration properties for an individual application, profile and label.
    *
-   * @param newPropertiesData configuration properties data.
+   * @param newPropertiesDtoData configuration properties data.
    * @return list of saved configuration properties.
    */
   @PostMapping("/save-all")
-  List<ConfigurationProperty> saveAll(@RequestBody NewConfigurationProperties newPropertiesData);
+  List<PropertyDto> saveAll(@RequestBody NewPropertiesDto newPropertiesDtoData);
 
   /**
    * Creating a configuration property.
    *
-   * @param configurationProperty these properties.
+   * @param propertyDto these properties.
    * @return the created config property.
    */
   @PostMapping("/create")
-  ConfigurationProperty create(@RequestBody ConfigurationProperty configurationProperty);
+  PropertyDto create(@RequestBody PropertyDto propertyDto);
 
   /**
    * Saving the configuration property.
    *
-   * @param configurationProperty these properties.
+   * @param propertyDto these properties.
    * @return saved configuration property.
    */
   @PostMapping("/save")
-  ConfigurationProperty save(@RequestBody ConfigurationProperty configurationProperty);
+  PropertyDto save(@RequestBody PropertyDto propertyDto);
 
   /**
    * Deleting a configuration property.
    *
-   * @param configurationProperty удаляемое свойство.
+   * @param propertyDto удаляемое свойство.
    */
   @DeleteMapping("/delete")
-  void delete(@RequestBody ConfigurationProperty configurationProperty);
+  void delete(@RequestBody PropertyDto propertyDto);
 
   /**
    * Forced update of configurations.

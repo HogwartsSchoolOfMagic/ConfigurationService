@@ -12,7 +12,7 @@
 
     <groupId>ru.bangerok.enterprise</groupId>
     <artifactId>ninja-configuration</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
     <name>Ninja Configuration</name>
     <description>Configuration service on "Spring Cloud"</description>
@@ -53,7 +53,7 @@
 
     <properties>
         <!-- Ninja Modules -->
-        <ninja-configuration.version>0.0.1</ninja-configuration.version>
+        <ninja.modules.version>1.0.1</ninja.modules.version>
 
         <!-- Compiler -->
         <java.version>16</java.version>
@@ -110,25 +110,25 @@
             <dependency>
                 <groupId>ru.bangerok.enterprise</groupId>
                 <artifactId>configuration-api</artifactId>
-                <version>${ninja-configuration.version}</version>
+                <version>${ninja.modules.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>ru.bangerok.enterprise</groupId>
                 <artifactId>configuration-client</artifactId>
-                <version>${ninja-configuration.version}</version>
+                <version>${ninja.modules.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>ru.bangerok.enterprise</groupId>
                 <artifactId>configuration-jdbc</artifactId>
-                <version>${ninja-configuration.version}</version>
+                <version>${ninja.modules.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>ru.bangerok.enterprise</groupId>
                 <artifactId>configuration-rest</artifactId>
-                <version>${ninja-configuration.version}</version>
+                <version>${ninja.modules.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -157,7 +157,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configLocation>google-check-style.xml</configLocation>
+                    <configLocation>./google-check-style.xml</configLocation>
                     <violationSeverity>warning</violationSeverity>
                     <consoleOutput>true</consoleOutput>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
