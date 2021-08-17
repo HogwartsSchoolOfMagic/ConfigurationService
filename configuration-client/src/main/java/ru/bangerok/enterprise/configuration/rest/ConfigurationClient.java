@@ -16,7 +16,7 @@ import ru.bangerok.enterprise.configuration.dto.SearchPropertyDto;
  * Feign is an interface containing methods for execution in other services and modules.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @FeignClient("${CONFIG_APPLICATION_NAME:configuration-server}")
 @RequestMapping("/configuration")

@@ -9,7 +9,7 @@ import lombok.ToString;
  * Base abstract class for DTO inheritance.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @Getter
 @Setter

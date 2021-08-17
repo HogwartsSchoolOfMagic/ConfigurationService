@@ -10,7 +10,7 @@ import lombok.ToString;
  * DTO for config property.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @Getter
 @Setter

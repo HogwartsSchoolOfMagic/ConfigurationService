@@ -6,11 +6,25 @@
   <parent>
     <artifactId>ninja-configuration</artifactId>
     <groupId>ru.bangerok.enterprise</groupId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </parent>
 
   <artifactId>configuration-api</artifactId>
   <version>1.0.1</version>
   <name>Configuration Service API</name>
   <description>General API for all modules</description>
+
+  <dependencies>
+    <!-- Spring: core for property source factory -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+
+    <!-- Spring: beans for property source factory -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+    </dependency>
+  </dependencies>
 </project>

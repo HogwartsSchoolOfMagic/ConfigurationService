@@ -13,7 +13,7 @@ import ru.bangerok.enterprise.configuration.persistance.model.Property;
  * Mapping for configuration properties.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @Mapper
 public interface PropertiesMapper {

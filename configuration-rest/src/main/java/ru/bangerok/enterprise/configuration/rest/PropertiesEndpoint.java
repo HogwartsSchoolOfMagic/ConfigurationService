@@ -19,7 +19,7 @@ import ru.bangerok.enterprise.configuration.service.PropertiesService;
  * REST is a controller for CRUD operations with configuration properties.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @Slf4j
 @RequiredArgsConstructor

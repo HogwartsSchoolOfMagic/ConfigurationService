@@ -14,7 +14,7 @@ import ru.bangerok.enterprise.configuration.persistance.model.PropertyPk;
  * Configuration properties repository.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @Repository
 public interface PropertiesRepository
