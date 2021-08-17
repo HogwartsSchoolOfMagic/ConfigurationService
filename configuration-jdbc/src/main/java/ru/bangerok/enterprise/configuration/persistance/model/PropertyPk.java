@@ -12,7 +12,7 @@ import lombok.ToString;
  * Primary composite key for the configuration properties entity.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @Getter
 @Setter

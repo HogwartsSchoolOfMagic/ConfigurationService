@@ -10,7 +10,7 @@ import ru.bangerok.enterprise.configuration.base.AbstractBaseProperty;
  * DTO to find configuration properties.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @Getter
 @Setter

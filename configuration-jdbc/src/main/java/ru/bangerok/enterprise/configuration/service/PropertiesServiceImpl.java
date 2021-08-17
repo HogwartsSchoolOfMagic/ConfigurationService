@@ -12,22 +12,27 @@ import ru.bangerok.enterprise.configuration.dto.PropertyDto;
 import ru.bangerok.enterprise.configuration.dto.SearchPropertyDto;
 import ru.bangerok.enterprise.configuration.persistance.repository.PropertiesRepository;
 import ru.bangerok.enterprise.configuration.service.mapper.PropertiesMapper;
+import ru.bangerok.enterprise.configuration.util.YamlPropertySourceFactory;
 
 /**
  * Implementing an interface that provides methods for working with the configuration properties
  * repository.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @RequiredArgsConstructor
 @Service
 @Transactional(rollbackFor = Exception.class)
-@PropertySource(value = "classpath:configuration-provider.properties", encoding = "UTF-8")
+@PropertySource(
+    value = "classpath:configuration-jdbc-provider.yml",
+    encoding = "UTF-8",
+    factory = YamlPropertySourceFactory.class
+)
 public class PropertiesServiceImpl implements PropertiesService {
 
   /**
-   * Repository for working with an entity - configuration properties.
+   * Repository for working with an entity — configuration properties.
    */
   private final PropertiesRepository repository;
 

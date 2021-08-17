@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
  * Util class for working database.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JdbcUtil {

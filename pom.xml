@@ -12,7 +12,7 @@
 
     <groupId>ru.bangerok.enterprise</groupId>
     <artifactId>ninja-configuration</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
     <name>Ninja Configuration</name>
     <description>Configuration service on "Spring Cloud"</description>

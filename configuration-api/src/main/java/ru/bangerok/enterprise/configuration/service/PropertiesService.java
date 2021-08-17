@@ -10,7 +10,7 @@ import ru.bangerok.enterprise.configuration.dto.SearchPropertyDto;
  * provider.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
- * @since 0.0.1.
+ * @since 1.0.0.
  */
 public interface PropertiesService {
 
