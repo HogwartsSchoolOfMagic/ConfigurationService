@@ -1,13 +1,13 @@
 package ru.bangerok.enterprise.configuration.persistance.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.Valid;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,18 +21,16 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "properties")
-public class ConfigurationPropertyEntity {
+public class Property {
 
   /**
    * Configuration primary key.
    */
   @Valid
   @EmbeddedId
-  @EqualsAndHashCode.Include
-  private ConfigurationPropertyPk id;
+  private PropertyPk id;
 
   /**
    * Configuration value.
@@ -63,10 +61,28 @@ public class ConfigurationPropertyEntity {
   }
 
   /**
-   * Setting the update date of the configuration property before updating in the databaseх.
+   * Setting the update date of the configuration property before updating in the database.
    */
   @PreUpdate
   public void preUpdate() {
     setModify(LocalDateTime.now());
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (!(o instanceof Property that)) {
+      return false;
+    }
+
+    return getId().equals(that.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId());
   }
 }

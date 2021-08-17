@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
-import ru.bangerok.enterprise.configuration.persistance.model.ConfigurationPropertyEntity;
-import ru.bangerok.enterprise.configuration.persistance.model.ConfigurationPropertyPk;
+import ru.bangerok.enterprise.configuration.persistance.model.Property;
+import ru.bangerok.enterprise.configuration.persistance.model.PropertyPk;
 
 /**
  * Configuration properties repository.
@@ -17,11 +17,11 @@ import ru.bangerok.enterprise.configuration.persistance.model.ConfigurationPrope
  * @since 0.0.1.
  */
 @Repository
-public interface ConfigurationPropertiesRepository
-    extends JpaRepository<ConfigurationPropertyEntity, ConfigurationPropertyPk> {
+public interface PropertiesRepository
+    extends JpaRepository<Property, PropertyPk> {
 
   /**
-   * Getting a configuration property by key, description, or value.
+   * Getting a configuration property by key, description or value.
    *
    * @param application application.
    * @param profile     profile.
@@ -33,7 +33,7 @@ public interface ConfigurationPropertiesRepository
    * @return configuration property list.
    */
   @Query("""
-             from ConfigurationPropertyEntity cpe
+             from Property cpe
              where (:application is null or cpe.id.application like %:application%) and
                    (:profile is null or cpe.id.profile like %:profile%) and
                    (:label is null or cpe.id.label like %:label%) and
@@ -42,7 +42,7 @@ public interface ConfigurationPropertiesRepository
                    (:value is null or cpe.value like %:value%)
       """
   )
-  List<ConfigurationPropertyEntity> findByMultiplyParams(
+  List<Property> findByMultiplyParams(
       String application, String profile, String label, String key, String description,
       String value, Sort sort
   );
@@ -50,11 +50,11 @@ public interface ConfigurationPropertiesRepository
   /**
    * Getting a configuration property by a composite key value.
    *
-   * @param configurationPropertyPk composite key.
+   * @param propertyPk composite key.
    * @return {@code Optional<Property>} with information about the found configuration property.
    */
   @Override
   @NonNull
-  Optional<ConfigurationPropertyEntity> findById(
-      @NonNull ConfigurationPropertyPk configurationPropertyPk);
+  Optional<Property> findById(
+      @NonNull PropertyPk propertyPk);
 }

@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>ninja-configuration</artifactId>
     <groupId>ru.bangerok.enterprise</groupId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
 
   <artifactId>configuration-jdbc</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.1</version>
   <name>Configuration Service JDBC</name>
   <description>Database for JDBC backend</description>
 
@@ -19,7 +19,6 @@
     <dependency>
       <groupId>ru.bangerok.enterprise</groupId>
       <artifactId>configuration-api</artifactId>
-      <version>0.0.1</version>
     </dependency>
 
     <!-- Database connection -->

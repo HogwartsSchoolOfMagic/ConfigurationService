@@ -1,14 +1,13 @@
 package ru.bangerok.enterprise.configuration.dto;
 
-import java.util.Map;
+import java.time.LocalDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ru.bangerok.enterprise.configuration.dto.base.AbstractBaseProperty;
 
 /**
- * DTO to save/update configuration properties.
+ * DTO for config property.
  *
  * @author Vladislav [Bangerok] Kuznetsov.
  * @since 0.0.1.
@@ -17,10 +16,15 @@ import ru.bangerok.enterprise.configuration.dto.base.AbstractBaseProperty;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class NewConfigurationProperties extends AbstractBaseProperty {
+public class PropertyDto extends SearchPropertyDto {
 
   /**
-   * List of keys with values of configuration properties.
+   * Property creation date.
    */
-  private Map<String, String> keysValues;
+  private LocalDateTime creation;
+
+  /**
+   * Property modification date.
+   */
+  private LocalDateTime modify;
 }

@@ -6,11 +6,11 @@
   <parent>
     <artifactId>ninja-configuration</artifactId>
     <groupId>ru.bangerok.enterprise</groupId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
   </parent>
 
   <artifactId>configuration-client</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.1</version>
   <name>Configuration Service Client</name>
   <description>OpenFeign interface for usage into services</description>
 
@@ -19,7 +19,6 @@
     <dependency>
       <groupId>ru.bangerok.enterprise</groupId>
       <artifactId>configuration-api</artifactId>
-      <version>0.0.1</version>
     </dependency>
 
     <!-- Spring Cloud: feign -->

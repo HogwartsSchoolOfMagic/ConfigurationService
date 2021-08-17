@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ru.bangerok.enterprise.configuration.dto.base.AbstractBaseProperty;
+import ru.bangerok.enterprise.configuration.base.AbstractBaseProperty;
 
 /**
  * DTO to find configuration properties.
@@ -16,7 +16,7 @@ import ru.bangerok.enterprise.configuration.dto.base.AbstractBaseProperty;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
-public class SearchConfigurationProperty extends AbstractBaseProperty {
+public class SearchPropertyDto extends AbstractBaseProperty {
 
   /**
    * Configuration key.

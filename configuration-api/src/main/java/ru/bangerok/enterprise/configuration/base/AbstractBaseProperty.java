@@ -1,4 +1,4 @@
-package ru.bangerok.enterprise.configuration.dto.base;
+package ru.bangerok.enterprise.configuration.base;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
