@@ -1,0 +1,88 @@
+databaseChangeLog:
+  - changeSet:
+      id: db_0.0.1_init_database_structure
+      author: Vladislav [Bangerok] Kuznetsov
+      comment: Creating the initial structure for the configuration service DB
+      changes:
+        - createTable:
+            tableName: properties
+            remarks: Main table for storing configuration properties
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    unique: true
+                    primaryKey: true
+                    primaryKeyName: properties_pkey
+                  name: base_id
+                  type: BIGINT
+              - column:
+                  remarks: Date of creation
+                  name: base_created_date
+                  constraints:
+                    nullable: false
+                  defaultValueComputed: now()
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  remarks: Date of modify
+                  name: base_updated_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  remarks: Configuration application name
+                  name: application
+                  constraints:
+                    nullable: false
+                  type: TEXT
+              - column:
+                  remarks: Configuration profile name
+                  name: profile
+                  constraints:
+                    nullable: false
+                  defaultValue: default
+                  type: TEXT
+              - column:
+                  remarks: Configuration label name
+                  name: label
+                  constraints:
+                    nullable: false
+                  defaultValue: master
+                  type: TEXT
+              - column:
+                  remarks: Configuration property key
+                  name: key
+                  constraints:
+                    nullable: false
+                  type: TEXT
+              - column:
+                  remarks: Configuration property value
+                  constraints:
+                    nullable: false
+                  name: value
+                  type: TEXT
+              - column:
+                  remarks: Description
+                  name: description
+                  type: TEXT
+              - column:
+                  remarks: Configuration property type
+                  name: type
+                  defaultValue: String
+                  type: TEXT
+              - column:
+                  remarks: Regex expression to test a value
+                  name: pattern
+                  type: TEXT
+        - createIndex:
+            tableName: properties
+            columns:
+              - column:
+                  name: application
+              - column:
+                  name: profile
+              - column:
+                  name: label
+              - column:
+                  name: key
+            indexName: idx_composite_key
+            unique: true

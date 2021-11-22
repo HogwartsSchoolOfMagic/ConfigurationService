@@ -2,17 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>ninja-configuration</artifactId>
-    <groupId>ru.bangerok.enterprise</groupId>
-    <version>1.0.2</version>
+    <artifactId>configuration-service</artifactId>
+    <groupId>io.github.ninjaenterprise</groupId>
+    <version>1.1.0</version>
   </parent>
 
+  <modelVersion>4.0.0</modelVersion>
   <artifactId>configuration-server</artifactId>
-  <version>1.0.0</version>
-  <name>Configuration Service Server</name>
+  <name>Ninja Services: configuration (Server)</name>
   <description>Server for starting all modules and working with Spring Cloud</description>
+
+  <properties>
+    <spring-boot-admin-server.version>2.5.4</spring-boot-admin-server.version>
+  </properties>
 
   <dependencies>
     <!-- Spring Cloud: config -->
@@ -21,25 +24,32 @@
       <artifactId>spring-cloud-config-server</artifactId>
     </dependency>
 
+    <!-- Spring Boot: admin client -->
+    <dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-client</artifactId>
+      <version>${spring-boot-admin-server.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Configuration Service: modules -->
     <dependency>
-      <groupId>ru.bangerok.enterprise</groupId>
+      <groupId>io.github.ninjaenterprise</groupId>
       <artifactId>configuration-rest</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler.version}</version>
-      </plugin>
-
-      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
       </plugin>
     </plugins>
   </build>

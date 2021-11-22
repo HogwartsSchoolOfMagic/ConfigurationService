@@ -2,40 +2,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>ninja-configuration</artifactId>
-    <groupId>ru.bangerok.enterprise</groupId>
-    <version>1.0.2</version>
+    <artifactId>configuration-service</artifactId>
+    <groupId>io.github.ninjaenterprise</groupId>
+    <version>1.1.0</version>
   </parent>
 
+  <modelVersion>4.0.0</modelVersion>
   <artifactId>configuration-rest</artifactId>
-  <version>1.0.1</version>
-  <name>Configuration Service REST</name>
+  <name>Ninja Services: configuration (REST)</name>
   <description>REST for working create/update/delete configuration properties from database</description>
 
   <dependencies>
-    <!-- Spring Boot: REST -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- Spring Cloud: bus-refresh -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-bus-kafka</artifactId>
     </dependency>
 
+    <!-- Spring Cloud: discovery client -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+
     <!-- Configuration Service: modules -->
     <dependency>
-      <groupId>ru.bangerok.enterprise</groupId>
+      <groupId>io.github.ninjaenterprise</groupId>
       <artifactId>configuration-client</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>ru.bangerok.enterprise</groupId>
+      <groupId>io.github.ninjaenterprise</groupId>
       <artifactId>configuration-jdbc</artifactId>
     </dependency>
   </dependencies>

@@ -2,17 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>ninja-configuration</artifactId>
-    <groupId>ru.bangerok.enterprise</groupId>
-    <version>1.0.2</version>
+    <artifactId>configuration-service</artifactId>
+    <groupId>io.github.ninjaenterprise</groupId>
+    <version>1.1.0</version>
   </parent>
 
+  <modelVersion>4.0.0</modelVersion>
   <artifactId>configuration-api</artifactId>
-  <version>1.0.1</version>
-  <name>Configuration Service API</name>
+  <name>Ninja Services: configuration (API)</name>
   <description>General API for all modules</description>
+
+  <properties>
+    <!-- Pluggable Modules Versions -->
+    <search-library-model.version>5.0.0</search-library-model.version>
+  </properties>
 
   <dependencies>
     <!-- Spring: core for property source factory -->
@@ -25,6 +29,19 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
+    </dependency>
+
+    <!-- Javax: validation and patterns -->
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+    </dependency>
+
+    <!-- Libraries: search settings model -->
+    <dependency>
+      <groupId>io.github.ninjaenterprise</groupId>
+      <artifactId>search-library-with-query-dsl</artifactId>
+      <version>${search-library-model.version}</version>
     </dependency>
   </dependencies>
 </project>

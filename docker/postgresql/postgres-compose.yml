@@ -20,6 +20,6 @@ services:
         source: ./data
         target: /var/lib/postgresql/data
     ports:
-      - $PG_PORT:5432
+      - ${PG_PORT}:5432
     restart: always
     command: "postgres -c max_prepared_transactions=150 -c max_connections=150"

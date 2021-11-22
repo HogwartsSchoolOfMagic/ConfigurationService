@@ -6,72 +6,55 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>2.5.7</version>
     </parent>
 
-    <groupId>ru.bangerok.enterprise</groupId>
-    <artifactId>ninja-configuration</artifactId>
-    <version>1.0.2</version>
+    <groupId>io.github.ninjaenterprise</groupId>
+    <artifactId>configuration-service</artifactId>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
-    <name>Ninja Configuration</name>
+    <name>Ninja Services: configuration</name>
     <description>Configuration service on "Spring Cloud"</description>
-    <url>https://github.com/NinjaEnterprise/NinjaConfiguration</url>
+    <url>https://github.com/NinjaEnterprise/ConfigurationService</url>
 
     <organization>
         <name>Vladislav Kuznetsov</name>
         <url>https://vk.com/vladislav_kuznetsov</url>
     </organization>
 
-    <developers>
-        <developer>
-            <id>bangerok</id>
+    <contributors>
+        <contributor>
             <name>Vladislav Kuznetsov</name>
-            <email>kuznetsov.v.a.work@gmail.com</email>
-            <timezone>+3</timezone>
             <roles>
-                <role>developer</role>
+                <role>Java Developer</role>
             </roles>
-        </developer>
-    </developers>
-
-    <profiles>
-        <profile>
-            <id>all</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>configuration-api</module>
-                <module>configuration-client</module>
-                <module>configuration-jdbc</module>
-                <module>configuration-rest</module>
-                <module>configuration-server</module>
-            </modules>
-        </profile>
-    </profiles>
+        </contributor>
+    </contributors>
 
     <properties>
-        <!-- Ninja Modules -->
-        <ninja.modules.version>1.0.1</ninja.modules.version>
+        <!-- Pluggable Modules Versions -->
+        <configuration.version>1.1.0</configuration.version>
 
-        <!-- Compiler -->
-        <java.version>16</java.version>
+        <!-- Pluggable Dependency Versions -->
+        <spring-boot-admin-server.version>2.5.4</spring-boot-admin-server.version>
+        <spring-cloud-dependencies.version>2020.0.4</spring-cloud-dependencies.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
+        <mockito-junit-jupiter.version>4.0.0</mockito-junit-jupiter.version>
+
+        <!-- Plugin properties -->
+        <checkstyle.version>9.1</checkstyle.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <apt-maven-plugin.version>1.1.2</apt-maven-plugin.version>
+        <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <lombok.version>1.18.22</lombok.version>
+
+        <!-- Compiler properties -->
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <!-- Dependencies -->
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
-        <lombok.version>1.18.20</lombok.version>
-
-        <!-- Plugins -->
-        <checkstyle-plugin.version>3.1.2</checkstyle-plugin.version>
-        <puppycrawl.checkstyle.version>8.43</puppycrawl.checkstyle.version>
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <lombok-mapstruct.version>0.1.0</lombok-mapstruct.version>
-        <spring-boot.version>2.5.2</spring-boot.version>
-        <maven-compiler.version>3.8.1</maven-compiler.version>
 
         <!-- Sonar Cloud -->
         <sonar.projectKey>NinjaEnterprise_NinjaConfiguration</sonar.projectKey>
@@ -88,7 +71,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -108,27 +91,27 @@
 
             <!-- Ninja modules -->
             <dependency>
-                <groupId>ru.bangerok.enterprise</groupId>
+                <groupId>io.github.ninjaenterprise</groupId>
                 <artifactId>configuration-api</artifactId>
-                <version>${ninja.modules.version}</version>
+                <version>${configuration.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.bangerok.enterprise</groupId>
+                <groupId>io.github.ninjaenterprise</groupId>
                 <artifactId>configuration-client</artifactId>
-                <version>${ninja.modules.version}</version>
+                <version>${configuration.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.bangerok.enterprise</groupId>
+                <groupId>io.github.ninjaenterprise</groupId>
                 <artifactId>configuration-jdbc</artifactId>
-                <version>${ninja.modules.version}</version>
+                <version>${configuration.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>ru.bangerok.enterprise</groupId>
+                <groupId>io.github.ninjaenterprise</groupId>
                 <artifactId>configuration-rest</artifactId>
-                <version>${ninja.modules.version}</version>
+                <version>${configuration.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -138,7 +121,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -148,19 +130,18 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle-plugin.version}</version>
+                <version>${maven-checkstyle-plugin.version}</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>${puppycrawl.checkstyle.version}</version>
+                        <version>${checkstyle.version}</version>
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <configLocation>./google-check-style.xml</configLocation>
+                    <configLocation>docs/google-check-style.xml</configLocation>
                     <violationSeverity>warning</violationSeverity>
                     <consoleOutput>true</consoleOutput>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -179,6 +160,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <annotationProcessorPaths>
                             <path>
@@ -204,7 +186,32 @@
                         </compilerArgs>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>com.mysema.maven</groupId>
+                    <artifactId>apt-maven-plugin</artifactId>
+                    <version>${apt-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>process</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>target/generated-sources/java</outputDirectory>
+                                <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <modules>
+        <module>configuration-api</module>
+        <module>configuration-client</module>
+        <module>configuration-jdbc</module>
+        <module>configuration-rest</module>
+        <module>configuration-server</module>
+    </modules>
 </project>
