@@ -7,6 +7,7 @@ import io.github.ninjaenterprise.search.model.SearchSettings;
 import io.github.ninjaenterprise.search.model.SearchSettingsSimple;
 import io.github.ninjaenterprise.search.model.TableResult;
 import java.util.List;
+import reactor.core.publisher.Flux;
 
 /**
  * Interface that provides methods for working with configuration properties from a database
@@ -24,7 +25,8 @@ public interface PropertiesService {
    * @return page with list of found configuration properties.
    * @throws ConfigurationException page properties by filters not found.
    */
-  TableResult<PropertyReturnDto> getPage(SearchSettings filters) throws ConfigurationException;
+  Flux<TableResult<PropertyReturnDto>> getPage(SearchSettings filters)
+      throws ConfigurationException;
 
   /**
    * Search for configuration properties by filtering options.

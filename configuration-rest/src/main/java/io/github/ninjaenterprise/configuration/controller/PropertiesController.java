@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 /**
  * REST is a controller for CRUD operations with configuration properties.
@@ -76,7 +77,7 @@ public class PropertiesController implements ConfigurationClient {
    * @throws ConfigurationException page properties by filters not found.
    */
   @Override
-  public TableResult<PropertyReturnDto> getPage(SearchSettings filters)
+  public Flux<TableResult<PropertyReturnDto>> getPage(SearchSettings filters)
       throws ConfigurationException {
     return service.getPage(filters);
   }

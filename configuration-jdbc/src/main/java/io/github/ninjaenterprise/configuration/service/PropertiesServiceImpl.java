@@ -22,6 +22,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import reactor.core.publisher.Flux;
 
 /**
  * Implementing an interface that provides methods for working with the configuration properties
@@ -68,7 +69,7 @@ public class PropertiesServiceImpl implements PropertiesService {
    * @throws ConfigurationException page properties by filters not found.
    */
   @Override
-  public TableResult<PropertyReturnDto> getPage(SearchSettings filters)
+  public Flux<TableResult<PropertyReturnDto>> getPage(SearchSettings filters)
       throws ConfigurationException {
     var page = filters.getPage();
     page = (page < 1) ? 1 : page;
@@ -90,7 +91,12 @@ public class PropertiesServiceImpl implements PropertiesService {
     } catch (SearchException e) {
       throw new ConfigurationException(e.getMessage(), e);
     }
-    var pageResult = repository.getPage(byCriteria, sort, asc, page, limit);
+    var pageResult = repository.getPage(byCriteria, sort, asc, page, limit)
+        .map(property -> Flux.just(new TableResult<>(
+            mapper.toDto(pageResult.getContent()),
+            pageResult.getTotalPages(),
+            pageResult.getTotalElements()
+        )));
     return new TableResult<>(
         mapper.toDto(pageResult.getContent()),
         pageResult.getTotalPages(),
