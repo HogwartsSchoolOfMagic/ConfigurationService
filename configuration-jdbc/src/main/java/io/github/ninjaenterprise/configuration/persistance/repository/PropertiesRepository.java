@@ -1,10 +1,6 @@
 package io.github.ninjaenterprise.configuration.persistance.repository;
 
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.PathBuilder;
 import io.github.ninjaenterprise.configuration.persistance.model.Property;
 import io.github.ninjaenterprise.configuration.persistance.model.PropertyCk;
 import io.github.ninjaenterprise.configuration.persistance.model.QProperty;
@@ -16,12 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.querydsl.ReactiveQuerydslPredicateExecutor;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 /**
  * Configuration properties repository.
@@ -30,8 +22,8 @@ import reactor.core.publisher.Mono;
  * @since 1.0.0.
  */
 @Repository
-public interface PropertiesRepository extends ReactiveCrudRepository<Property, Long>,
-    ReactiveQuerydslPredicateExecutor<Property> {
+public interface PropertiesRepository extends JpaRepository<Property, Long>,
+    QuerydslPredicateExecutor<Property> {
 
   /**
    * Getting a page-by-page selection of configurations.
@@ -43,11 +35,22 @@ public interface PropertiesRepository extends ReactiveCrudRepository<Property, L
    * @param itemsPerPage the number of items on the page.
    * @return sample with found configurations.
    */
-  default Flux<Property> getPage(Predicate predicate, String sortBy, Boolean descending,
-                                       long page, int itemsPerPage) {
-    return findAll(predicate, QProperty.property.created.desc())
-        .skip(page * itemsPerPage)
-        .take(itemsPerPage);
+  default Page<Property> getPage(Predicate predicate, String sortBy, Boolean descending,
+                                 long page, int itemsPerPage) {
+    final List<Sort.Order> orders;
+    if (!StringUtils.hasText(sortBy)) {
+      var defaultSort = QProperty.property.created.getMetadata().getName();
+      orders = List.of(Sort.Order.desc(defaultSort));
+    } else if ((descending == null) || Boolean.TRUE.equals(descending)) {
+      orders = List.of(Sort.Order.desc(sortBy));
+    } else {
+      orders = List.of(Sort.Order.asc(sortBy));
+    }
+
+    return findAll(
+        predicate,
+        PageRequest.of(Math.toIntExact(page - 1), itemsPerPage, Sort.by(orders))
+    );
   }
 
   /**
@@ -57,7 +60,7 @@ public interface PropertiesRepository extends ReactiveCrudRepository<Property, L
    * @param key configuration composite key.
    * @return configuration, if found.
    */
-  default Mono<Property> findByKey(@NotNull PropertyCk key) {
+  default Optional<Property> findByKey(@NotNull PropertyCk key) {
     var property = QProperty.property;
     var predicate = property.compoundId.application.eq(key.getApplication())
         .and(property.compoundId.profile.eq(key.getProfile()))

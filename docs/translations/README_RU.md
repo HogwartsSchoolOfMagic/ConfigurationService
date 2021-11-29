@@ -25,7 +25,7 @@
 ### 📖 Описание
 ___
 
-Занимается поддержкой конфигураций, используемых клиентскими приложениями. Состоит из следующих модулей::
+Engaged in maintaining the configurations used by client applications. Consists of the following modules:
 1. **[ConfigurationAPI](https://github.com/NinjaEnterprise/NinjaConfiguration/tree/master/configuration-api)**.
 Модуль, предоставляющий интерфейсы для взаимодействия с сервером;
 

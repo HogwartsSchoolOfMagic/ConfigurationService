@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import reactor.core.publisher.Flux;
 
 /**
  * Feign is an interface containing methods for execution in other services and modules.
@@ -37,7 +36,7 @@ public interface ConfigurationClient {
    * @throws ConfigurationException page properties by filters not found.
    */
   @PostMapping("/page")
-  Flux<TableResult<PropertyReturnDto>> getPage(@RequestBody SearchSettings filters)
+  TableResult<PropertyReturnDto> getPage(@RequestBody SearchSettings filters)
       throws ConfigurationException;
 
   /**
