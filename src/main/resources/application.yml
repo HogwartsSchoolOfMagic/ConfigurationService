@@ -1,0 +1,51 @@
+### Basic server properties ###
+server:
+  port: ${CONFIG_PORT:8888}
+
+### Basic spring properties ###
+spring:
+  ## Application ##
+  application:
+    name: ${CONFIG_APPLICATION_NAME:configuration-service}
+  profiles:
+    active: jdbc
+
+  ## Cloud connections ##
+  cloud:
+    bus:
+      enabled: true
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER_URI:localhost:9092}
+
+  ## Database connections ##
+  datasource:
+    url: ${CONFIG_DB_URL:jdbc:postgresql://localhost:5025/configurations_db}
+    username: ${CONFIG_DB_USERNAME:postgres}
+    password: ${CONFIG_DB_PASSWORD:123456}
+    driver-class-name: ${CONFIG_DB_DRIVER:org.postgresql.Driver}
+
+  ## Database migration ##
+  jpa:
+    hibernate:
+      ddl-auto: ${CONFIG_DB_DDL_AUTO:validate}
+  liquibase:
+    change-log: ${CONFIG_LIQUIBASE_PATH:classpath:db/liquibase/db.changelog-master.yml}
+
+### Basic discovery client properties ###
+eureka:
+  client:
+    healthcheck:
+      enabled: ${DISCOVERY_HEALTH_CHECK:false}
+    registryFetchIntervalSeconds: ${DISCOVERY_REGISTRY_FETCH_INTERVAL_SECONDS:5}
+    serviceUrl:
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8761}/eureka/
+
+### Basic actuator properties ###
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
