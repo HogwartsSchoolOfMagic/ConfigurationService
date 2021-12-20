@@ -17,6 +17,7 @@ import io.github.ninjaenterprise.search.querydsl.paging.PagingService;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -83,7 +84,9 @@ public class PropertiesServiceImpl implements PropertiesService {
     } catch (SearchException e) {
       throw new ConfigurationException(e.getMessage(), e);
     }
-    var pageResult = repository.getPage(byCriteria, sort, asc, page, limit);
+    var pageResult = repository.getPage(
+        byCriteria, sort, asc, PageRequest.of(Math.toIntExact(page - 1), limit)
+    );
     return new TableResult<>(
         mapper.toDto(pageResult.getContent()),
         pageResult.getTotalPages(),

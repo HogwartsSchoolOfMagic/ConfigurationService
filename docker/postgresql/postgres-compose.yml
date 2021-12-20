@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  config-database:
-    container_name: $APPLICATION_NAME-postgres
+  configurations-db:
+    container_name: $APPLICATION_NAME
     build:
       context: ./
       dockerfile: ./Dockerfile

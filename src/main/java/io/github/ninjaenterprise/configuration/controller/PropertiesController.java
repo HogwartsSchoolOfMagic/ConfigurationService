@@ -10,6 +10,13 @@ import io.github.ninjaenterprise.configuration.service.PropertiesService;
 import io.github.ninjaenterprise.search.model.SearchSettings;
 import io.github.ninjaenterprise.search.model.SearchSettingsSimple;
 import io.github.ninjaenterprise.search.model.TableResult;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +36,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,6 +50,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RefreshScope
 @RestController
+@RequestMapping("/api/configurations")
+@Tag(name = "PropertiesController", description = "API for working with application configurations")
 public class PropertiesController {
 
   /**
@@ -83,9 +93,36 @@ public class PropertiesController {
    * @return page with list of found configuration properties.
    * @throws ConfigurationException page properties by filters not found.
    */
+  @Operation(
+      summary = "Search for configuration properties by filtering options for results and paging"
+  )
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration properties found",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto[].class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Invalid request parameters",
+          content = @Content
+      )
+  })
   @PostMapping("/page")
-  public TableResult<PropertyReturnDto> getPage(@RequestBody SearchSettings filters)
-      throws ConfigurationException {
+  public TableResult<PropertyReturnDto> getPage(
+      @Parameter(description = "Search filters", required = true)
+      @RequestBody SearchSettings filters
+  ) throws ConfigurationException {
     return service.getPage(filters);
   }
 
@@ -97,9 +134,39 @@ public class PropertiesController {
    * @return created configuration, or the current one.
    * @throws ConfigurationException property creating error.
    */
+  @Operation(
+      summary = "Create a configuration property if it doesn't already exist with that primary key"
+  )
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration property created",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto.class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Attempting to create a duplicate",
+          content = @Content
+      )
+  })
   @PostMapping
   public PropertyReturnDto create(
+      @Parameter(
+          description = "Information about the generated configuration property",
+          required = true
+      )
       @RequestBody @Valid PropertyDto propertyDto,
+      @Parameter(description = "Client configuration properties update flag")
       @RequestParam(defaultValue = "false", required = false) boolean refresh
   ) throws ConfigurationException {
     var createdProperty = saveOrCreateProperty(propertyDto, true);
@@ -115,9 +182,40 @@ public class PropertiesController {
    * @return created configurations.
    * @throws ConfigurationException properties creating error.
    */
+  @Operation(
+      summary = "Create a configuration properties if it doesn't already exist with that "
+          + "primary key"
+  )
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration properties created",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto.class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Attempting to create a duplicate",
+          content = @Content
+      )
+  })
   @PostMapping("/batch")
   public List<PropertyReturnDto> createAll(
+      @Parameter(
+          description = "Information about the generated configuration properties",
+          required = true
+      )
       @RequestBody @Valid List<PropertyDto> propertyDtoList,
+      @Parameter(description = "Client configuration properties update flag")
       @RequestParam(defaultValue = "false", required = false) boolean refresh
   ) throws ConfigurationException {
     var createdProperties = new ArrayList<PropertyReturnDto>();
@@ -142,22 +240,74 @@ public class PropertiesController {
    * @return configuration property.
    * @throws ConfigurationException getting property error by id.
    */
+  @Operation(summary = "Get configuration property by ID")
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration property found",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto.class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Configuration property not found",
+          content = @Content
+      )
+  })
   @GetMapping("/{propertyId}")
-  public PropertyReturnDto getById(@PathVariable Long propertyId) throws ConfigurationException {
+  public PropertyReturnDto getById(
+      @Parameter(
+          description = "Identifier to search for the configuration property",
+          required = true
+      )
+      @PathVariable Long propertyId
+  ) throws ConfigurationException {
     return service.findById(propertyId);
   }
 
   /**
-   * Saving/Updating configuration properties.
+   * Saving/Updating configuration property.
    *
    * @param propertyDto these properties.
    * @param refresh     flag refresh properties.
    * @return saved configuration, or the current one.
    * @throws ConfigurationException property saving error.
    */
+  @Operation(summary = "Saving/Updating configuration property")
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration property saved",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto.class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      )
+  })
   @PutMapping
   public PropertyReturnDto save(
+      @Parameter(
+          description = "Information about the saved configuration property",
+          required = true
+      )
       @RequestBody @Valid PropertyDto propertyDto,
+      @Parameter(description = "Client configuration properties update flag")
       @RequestParam(defaultValue = "false", required = false) boolean refresh
   ) throws ConfigurationException {
     var savedProperty = saveOrCreateProperty(propertyDto, false);
@@ -173,9 +323,32 @@ public class PropertiesController {
    * @return list of saved configuration properties.
    * @throws ConfigurationException properties saving error.
    */
+  @Operation(summary = "Saving/Updating configuration property")
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration properties saved",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto[].class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      )
+  })
   @PutMapping("/batch")
   public List<PropertyReturnDto> saveAll(
+      @Parameter(
+          description = "Information about the saved configuration properties",
+          required = true
+      )
       @RequestBody @Valid List<PropertyDto> propertyDtoList,
+      @Parameter(description = "Client configuration properties update flag")
       @RequestParam(defaultValue = "false", required = false) boolean refresh
   ) throws ConfigurationException {
     var updatedProperties = new ArrayList<PropertyReturnDto>();
@@ -201,9 +374,32 @@ public class PropertiesController {
    * @return list of removed configuration properties.
    * @throws ConfigurationException configuration properties deletion errors.
    */
+  @Operation(summary = "Removing configuration properties")
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration properties deleted",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto[].class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      )
+  })
   @DeleteMapping("/batch")
   public List<PropertyReturnDto> deleteAll(
+      @Parameter(
+          description = "Information about the deleted configuration properties",
+          required = true
+      )
       @RequestBody SearchSettingsSimple filters,
+      @Parameter(description = "Client configuration properties update flag")
       @RequestParam(defaultValue = "false", required = false) boolean refresh
   ) throws ConfigurationException {
     var deletedProperties = new ArrayList<PropertyReturnDto>();
@@ -229,9 +425,37 @@ public class PropertiesController {
    * @return deleted configuration property.
    * @throws ConfigurationException property delete error by id.
    */
+  @Operation(summary = "Removing an existing configuration property by identifier")
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Configuration property deleted",
+          content = {
+              @Content(
+                  mediaType = "application/json",
+                  schema = @Schema(implementation = PropertyReturnDto.class)
+              )
+          }
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Missing or invalid request parameters",
+          content = @Content
+      ),
+      @ApiResponse(
+          responseCode = "500",
+          description = "Configuration property not found",
+          content = @Content
+      )
+  })
   @DeleteMapping("/{propertyId}")
   public PropertyReturnDto deleteById(
+      @Parameter(
+          description = "Identifier to search for the configuration property",
+          required = true
+      )
       @PathVariable Long propertyId,
+      @Parameter(description = "Client configuration properties update flag")
       @RequestParam(defaultValue = "false", required = false) boolean refresh
   ) throws ConfigurationException {
     var deletedProperty = service.deleteById(propertyId);
@@ -244,9 +468,22 @@ public class PropertiesController {
    *
    * @param destination target application name for refresh.
    */
-  @GetMapping("/refresh/{destination}")
-  public void refresh(@PathVariable String destination) {
-    refreshCloudConfigs(Collections.singletonList(destination), true);
+  @Operation(summary = "Forced update of configurations in one application")
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Destination service configuration properties updated",
+          content = @Content
+      )
+  })
+  @PostMapping("/refresh/{destination}")
+  public String refresh(
+      @Parameter(
+          description = "The name of the service whose configuration properties need to be updated"
+      )
+      @PathVariable String destination
+  ) {
+    return refreshCloudConfigs(Collections.singletonList(destination), true);
   }
 
   /**
@@ -254,9 +491,21 @@ public class PropertiesController {
    *
    * @param destinations target application names for refresh.
    */
+  @Operation(summary = "Forced update of configurations in more applications")
+  @ApiResponses(value = {
+      @ApiResponse(
+          responseCode = "200",
+          description = "Destination services configuration properties updated",
+          content = @Content
+      )
+  })
   @PostMapping("/refresh")
-  public void refreshAll(@RequestBody List<String> destinations) {
-    refreshCloudConfigs(
+  public String refreshAll(
+      @Parameter(description =
+          "The names of the services whose configuration properties need to be updated")
+      @RequestBody List<String> destinations
+  ) {
+    return refreshCloudConfigs(
         destinations.isEmpty()
             ? discoveryClient.getServices()
             : destinations,
@@ -283,9 +532,10 @@ public class PropertiesController {
    * @param destinations applications name for refresh.
    * @param refresh      flag refreshing properties.
    */
-  private void refreshCloudConfigs(List<String> destinations, boolean refresh) {
+  private String refreshCloudConfigs(List<String> destinations, boolean refresh) {
+    String destination = null;
     if (refresh) {
-      var destination = arrayToDelimitedString(
+      destination = arrayToDelimitedString(
           discoveryClient.getServices().stream()
               .filter(serviceName ->
                   destinations.contains(serviceName) && !applicationName.equals(serviceName)
@@ -301,5 +551,7 @@ public class PropertiesController {
         ));
       }
     }
+
+    return destination;
   }
 }

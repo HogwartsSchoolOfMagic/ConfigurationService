@@ -2,6 +2,11 @@
 server:
   port: ${CONFIG_PORT:8888}
 
+### Basic swagger properties ###
+springdoc:
+  api-docs:
+    path: /api-docs
+
 ### Basic spring properties ###
 spring:
   ## Application ##
@@ -14,6 +19,9 @@ spring:
   cloud:
     bus:
       enabled: true
+    config:
+      server:
+        prefix: /config
   kafka:
     bootstrap-servers: ${KAFKA_SERVER_URI:localhost:9092}
 

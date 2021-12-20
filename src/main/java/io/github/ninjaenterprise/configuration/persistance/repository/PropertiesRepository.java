@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -28,15 +29,14 @@ public interface PropertiesRepository extends JpaRepository<Property, Long>,
   /**
    * Getting a page-by-page selection of configurations.
    *
-   * @param predicate    sampling condition.
-   * @param sortBy       sort by field.
-   * @param descending   sorting direction.
-   * @param page         page number
-   * @param itemsPerPage the number of items on the page.
+   * @param predicate  sampling condition.
+   * @param sortBy     sort by field.
+   * @param descending sorting direction.
+   * @param pageable   page settings.
    * @return sample with found configurations.
    */
   default Page<Property> getPage(Predicate predicate, String sortBy, Boolean descending,
-                                 long page, int itemsPerPage) {
+                                 Pageable pageable) {
     final List<Sort.Order> orders;
     if (!StringUtils.hasText(sortBy)) {
       var defaultSort = QProperty.property.created.getMetadata().getName();
@@ -47,10 +47,12 @@ public interface PropertiesRepository extends JpaRepository<Property, Long>,
       orders = List.of(Sort.Order.asc(sortBy));
     }
 
-    return findAll(
-        predicate,
-        PageRequest.of(Math.toIntExact(page - 1), itemsPerPage, Sort.by(orders))
-    );
+    var pageSettings = ((PageRequest) pageable).withSort(Sort.by(orders));
+    if (predicate == null) {
+      return findAll(pageSettings);
+    }
+
+    return findAll(predicate, pageSettings);
   }
 
   /**

@@ -1,4 +1,4 @@
-set APPLICATION_NAME=NinjaConfiguration
+set APPLICATION_NAME=ConfigurationService
 
 set PG_DBNAME=configurations_db
 set PG_USER=postgres
