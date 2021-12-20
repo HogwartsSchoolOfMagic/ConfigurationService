@@ -1,6 +1,9 @@
-set APPLICATION_NAME=NinjaConfiguration
+set APPLICATION_NAME=configuration-service
 
-set PG_DBNAME=ninja-config-db
-set PG_USER=ninja
-set PG_PASSWORD=ninja
-set PG_PORT=5025
+set PG_DBNAME=magic_db
+set PG_USER=postgres
+set PG_PASSWORD=alohomora
+set PG_PORT=5024
+
+set KAFKA_HOST_NAME=localhost
+set KAFKA_PORT=9092

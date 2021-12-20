@@ -1,17 +1,17 @@
 ---
-name: Configuration issues
-about: Various suggestions for configuring the project
-title: '[CONFIGURATION] Short name of the new configuration.'
-labels: 'type: maintenance, status: backlog, priority: low'
-assignees: 'Bangerok'
+name: 🧰 Configuration issues
+about: Различные предложения по настройке проекта
+title: '[CONFIGURATION] Краткое название новой конфигурации.'
+labels: 'type: configuration, status: backlog, priority: low'
+assignees: 'SmithyVL'
 
 ---
 
-**Description of configuration**
-A clear and concise description of what you want to happen.
+**Описание конфигурации**
+Четкое и краткое описание того, что вы хотите, чтобы произошло.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Опишите альтернативные варианты**
+Четкое и краткое описание любых альтернативных решений или функций, которые вы рассмотрели.
 
-**Additional context**
-Add any other context or screenshots about the configuration issue here.
+**Дополнительный контекст**
+Добавьте любой другой контекст или скриншоты о проблеме конфигурации здесь.

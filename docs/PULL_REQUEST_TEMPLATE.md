@@ -1,30 +1,31 @@
-## Description
-* Describe your changes in detail.
-* Note any issues that are resolved by this PR e.g., resolves #4213 or fixes #2312.
+## Описание
+* Подробно опишите свои изменения;
+* Обратите внимание на любые проблемы, которые устраняются с помощью этого PR, например, устраняет #4213 или 
+исправляет #2312.
 
-## Motivation and Context
-* Why is this change required? 
-* What problem does it solve?
-* If it fixes an open issue, please link to the issue here.
+## Мотивация и контекст
+* Почему требуется это изменение?
+* Какую проблему оно решает?
+* Если это устраняет открытую проблему, пожалуйста, перейдите по ссылке на проблему здесь.
 
-## How Has This Been Tested?
-* All PR's should implement unit tests if possible.
-* Please describe how you tested your changes.
-* Have you created new tests or updated existing ones?
+## Как это было проверено?
+* Все PR должны по возможности внедрять модульные тесты;
+* Пожалуйста, опишите, как вы тестировали свои изменения;
+* Создали ли вы новые тесты или обновили существующие?
 
-## Types of changes
-What types of changes does your code introduce? Put an `x` in all the boxes that apply:
-* [ ] Bug fix;
-* [ ] New enhancement;
-* [ ] Maintenance: refactoring;
-* [ ] Maintenance: documentation;
-* [ ] Maintenance: configuring.
+## Типы изменений
+Какие типы изменений вносит ваш код? Поставьте крестик во всех соответствующих полях:
+* [ ] Исправлена ошибка;
+* [ ] Новое усовершенствование;
+* [ ] Техническое обслуживание: рефакторинг;
+* [ ] Техническое обслуживание: документация;
+* [ ] Техническое обслуживание: настройка.
 
-Also set the appropriate label.
+Также установите соответствующую метку.
 
-## Checklist:
-Go over all the following points, and put an `x` in all the boxes that apply.
-If you're unsure about any of these, don't hesitate to ask. We're here to help!
-- [ ] The PR title is no longer than 64 characters.
-- [ ] My code follows the code style of this project;
-- [ ] I've added relevant changes to the documentation.
+## Контрольный список:
+Пройдите по всем следующим пунктам и поставьте крестик во всех соответствующих полях. Если вы не уверены в чем-либо из 
+этого, не стесняйтесь спрашивать. Мы здесь, чтобы помочь!
+- [ ] Заголовок PR не должен превышать 64 символа.
+- [ ] Мой код соответствует стилю кода этого проекта;
+- [ ] Я добавил соответствующие изменения в документацию.

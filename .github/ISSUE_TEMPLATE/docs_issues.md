@@ -1,14 +1,14 @@
 ---
-name: Docs issues
-about: Improvements or additions to documentation
-title: '[DOCS] Short title of works on project documentation.'
-labels: 'type: maintenance, status: backlog, priority: low'
-assignees: 'Bangerok'
+name: 📖 Docs issues
+about: Улучшения или дополнения к документации
+title: '[DOCS] Краткое название работ по проектной документации.'
+labels: 'type: documentation, status: backlog, priority: low'
+assignees: 'SmithyVL'
 
 ---
 
-**Description of documentation**
-A clear and concise description of what you want to happen.
+**Описание документации**
+Четкое и краткое описание того, что вы хотите, чтобы произошло.
 
-**Additional context**
-Add any other context or screenshots about the documentation issue here.
+**Дополнительный контекст**
+Добавьте любой другой контекст или скриншоты о проблеме с документацией здесь.

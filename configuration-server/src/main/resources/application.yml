@@ -1,8 +1,0 @@
-server:
-  port: ${CONFIG_SERVER_PORT:9001}
-
-spring:
-  profiles:
-    active: jdbc
-  application:
-    name: ${CONFIG_APPLICATION_NAME:configuration-server}

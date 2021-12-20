@@ -1,0 +1,23 @@
+name: 'Release'
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    permissions:
+      contents: write  # Для создания Github релиза.
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔖 Создание релиза
+        uses: release-drafter/release-drafter@v5
+        with:
+          config-name: config/config_release_drafter.yml
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

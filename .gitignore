@@ -6,4 +6,4 @@
 **/target/
 
 ### Docker ###
-docker/postgresql/data
+docker/postgres/data
