@@ -2,304 +2,314 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.0</version>
-    <relativePath/>
-  </parent>
-
-  <groupId>io.github.hogwartsschoolofmagic</groupId>
-  <artifactId>configuration-service</artifactId>
-  <version>1.1.0</version>
-  <name>Magic Services: configuration</name>
-  <description>Configuration service on "Spring Cloud"</description>
-  <url>https://github.com/HogwartsSchoolOfMagic/ConfigurationService</url>
-
-  <organization>
-    <name>Vladislav Kuznetsov</name>
-    <url>https://vk.com/vladislav_kuznetsov</url>
-  </organization>
-
-  <contributors>
-    <contributor>
-      <name>Vladislav Kuznetsov</name>
-      <roles>
-        <role>Java Developer</role>
-      </roles>
-    </contributor>
-  </contributors>
-
-  <properties>
-    <!-- Pluggable Libraries Versions -->
-    <search-library.version>1.0.0-SNAPSHOT</search-library.version>
-
-    <!-- Pluggable Dependency Versions -->
-    <spring-boot-admin-server.version>2.6.7</spring-boot-admin-server.version>
-    <spring-cloud-dependencies.version>2021.0.3</spring-cloud-dependencies.version>
-    <mapstruct.version>1.4.2.Final</mapstruct.version>
-    <springdoc-openapi.version>1.6.9</springdoc-openapi.version>
-
-    <!-- Plugin properties -->
-    <apt-maven-plugin.version>1.1.3</apt-maven-plugin.version>
-    <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
-    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-
-    <!-- Compiler properties -->
-    <java.version>18</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-
-  <repositories>
-    <repository>
-      <id>ossrh-snapshots</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
-  </repositories>
-
-  <dependencyManagement>
-    <dependencies>
-      <!-- Spring Cloud: dependencies -->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud-dependencies.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <dependencies>
-    <!-- Spring Cloud: config -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-config-server</artifactId>
-    </dependency>
-
-    <!-- Spring Boot: admin client -->
-    <dependency>
-      <groupId>de.codecentric</groupId>
-      <artifactId>spring-boot-admin-starter-client</artifactId>
-      <version>${spring-boot-admin-server.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Spring Cloud: bus-refresh -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-bus-kafka</artifactId>
-    </dependency>
-
-    <!-- Spring Cloud: discovery client -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-    </dependency>
-
-    <!-- Database connection -->
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Liquibase -->
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <!-- Hibernate annotations for validation -->
-    <dependency>
-      <groupId>org.hibernate.validator</groupId>
-      <artifactId>hibernate-validator</artifactId>
-    </dependency>
-
-    <!-- Spring Boot: data -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-
-    <!-- Lombok -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
-
-    <!-- Mapstruct -->
-    <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct</artifactId>
-      <version>${mapstruct.version}</version>
-    </dependency>
-
-    <!-- Swagger 3: documentation REST -->
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
-      <version>${springdoc-openapi.version}</version>
-    </dependency>
-
-    <!-- Libraries: search settings model -->
-    <dependency>
-      <groupId>io.github.hogwartsschoolofmagic</groupId>
-      <artifactId>search-library</artifactId>
-      <version>${search-library.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-web</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.swagger.core.v3</groupId>
-          <artifactId>swagger-annotations</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.0</version>
+        <relativePath/>
+    </parent>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct-processor</artifactId>
-              <version>${mapstruct.version}</version>
-            </path>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok-mapstruct-binding</artifactId>
-              <version>${lombok-mapstruct.version}</version>
-            </path>
-          </annotationProcessorPaths>
-          <compilerArgs>
-            <compilerArg>
-              -Amapstruct.defaultComponentModel=spring
-            </compilerArg>
-          </compilerArgs>
-        </configuration>
-      </plugin>
+    <groupId>io.github.hogwartsschoolofmagic</groupId>
+    <artifactId>configuration-service</artifactId>
+    <version>1.1.0</version>
+    <name>Magic Services: configuration</name>
+    <description>Configuration service on "Spring Cloud"</description>
+    <url>https://github.com/HogwartsSchoolOfMagic/ConfigurationService</url>
 
-      <plugin>
-        <groupId>com.mysema.maven</groupId>
-        <artifactId>apt-maven-plugin</artifactId>
-        <version>${apt-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>process</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>target/generated-sources/java</outputDirectory>
-              <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+    <organization>
+        <name>HogwartsSchoolOfMagic</name>
+        <url>https://github.com/HogwartsSchoolOfMagic</url>
+    </organization>
 
-  <profiles>
-    <profile>
-      <id>back-checkstyle</id>
-      <properties>
+    <!-- List the core committers -->
+    <developers>
+        <developer>
+            <id>SmithyVL</id>
+            <name>Vladislav Kuznetsov</name>
+            <organization>HogwartsSchoolOfMagic</organization>
+            <organizationUrl>https://github.com/HogwartsSchoolOfMagic</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Analyst</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>0</timezone>
+            <properties>
+                <vk-url>https://vk.com/vladislav_kuznetsov</vk-url>
+            </properties>
+        </developer>
+    </developers>
+
+    <properties>
+        <!-- Pluggable Libraries Versions -->
+        <search-library.version>1.0.0-SNAPSHOT</search-library.version>
+
+        <!-- Pluggable Dependency Versions -->
+        <spring-boot-admin-server.version>2.6.7</spring-boot-admin-server.version>
+        <spring-cloud-dependencies.version>2021.0.3</spring-cloud-dependencies.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <springdoc-openapi.version>1.6.9</springdoc-openapi.version>
+
         <!-- Plugin properties -->
-        <puppycrawl.checkstyle.version>10.3</puppycrawl.checkstyle.version>
-        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-      </properties>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <!--suppress MavenModelInspection -->
-            <version>${maven-checkstyle-plugin.version}</version>
-            <dependencies>
-              <dependency>
-                <groupId>com.puppycrawl.tools</groupId>
-                <artifactId>checkstyle</artifactId>
-                <!--suppress MavenModelInspection -->
-                <version>${puppycrawl.checkstyle.version}</version>
-              </dependency>
-            </dependencies>
-            <configuration>
-              <configLocation>docs/google-check-style.xml</configLocation>
-              <violationSeverity>warning</violationSeverity>
-              <consoleOutput>true</consoleOutput>
-              <includeTestSourceDirectory>true</includeTestSourceDirectory>
-            </configuration>
-            <executions>
-              <execution>
-                <id>validate</id>
-                <phase>validate</phase>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
+        <apt-maven-plugin.version>1.1.3</apt-maven-plugin.version>
+        <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 
-    <profile>
-      <id>sonar-submodule</id>
-      <properties>
-        <!-- Plugin properties -->
-        <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+        <!-- Compiler properties -->
+        <java.version>18</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
-        <!-- Code analyzer: SonarCloud -->
-        <sonar.projectKey>HogwartsSchoolOfMagic_ConfigurationService</sonar.projectKey>
-        <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
-        <sonar.organization>hogwarts-school-of-magic</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.sources>src/main/java</sonar.sources>
-        <sonar.java.binaries>target/classes</sonar.java.binaries>
-      </properties>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
+    <repositories>
+        <repository>
+            <id>ossrh-snapshots</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Cloud: dependencies -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Spring Cloud: config -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+
+        <!-- Spring Boot: admin client -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>${spring-boot-admin-server.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Spring Cloud: bus-refresh -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-kafka</artifactId>
+        </dependency>
+
+        <!-- Spring Cloud: discovery client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <!-- Database connection -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Liquibase -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Hibernate annotations for validation -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <!-- Spring Boot: data -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Mapstruct -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+
+        <!-- Swagger 3: documentation REST -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
+        </dependency>
+
+        <!-- Libraries: search settings model -->
+        <dependency>
+            <groupId>io.github.hogwartsschoolofmagic</groupId>
+            <artifactId>search-library</artifactId>
+            <version>${search-library.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger.core.v3</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
         <plugins>
-          <plugin>
-            <groupId>org.sonarsource.scanner.maven</groupId>
-            <artifactId>sonar-maven-plugin</artifactId>
-            <!--suppress MavenModelInspection -->
-            <version>${sonar-maven-plugin.version}</version>
-            <executions>
-              <execution>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sonar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok-mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <compilerArg>
+                            -Amapstruct.defaultComponentModel=spring
+                        </compilerArg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>${apt-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/generated-sources/java</outputDirectory>
+                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-      </build>
-    </profile>
-  </profiles>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>back-checkstyle</id>
+            <properties>
+                <!-- Plugin properties -->
+                <puppycrawl.checkstyle.version>10.3</puppycrawl.checkstyle.version>
+                <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <!--suppress MavenModelInspection -->
+                        <version>${maven-checkstyle-plugin.version}</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.puppycrawl.tools</groupId>
+                                <artifactId>checkstyle</artifactId>
+                                <!--suppress MavenModelInspection -->
+                                <version>${puppycrawl.checkstyle.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <configLocation>docs/google-check-style.xml</configLocation>
+                            <violationSeverity>warning</violationSeverity>
+                            <consoleOutput>true</consoleOutput>
+                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>validate</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>sonar-submodule</id>
+            <properties>
+                <!-- Plugin properties -->
+                <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
+
+                <!-- Code analyzer: SonarCloud -->
+                <sonar.projectKey>HogwartsSchoolOfMagic_ConfigurationService</sonar.projectKey>
+                <sonar.moduleKey>${project.groupId}:${project.artifactId}</sonar.moduleKey>
+                <sonar.organization>hogwarts-school-of-magic</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+                <sonar.sources>src/main/java</sonar.sources>
+                <sonar.java.binaries>target/classes</sonar.java.binaries>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <!--suppress MavenModelInspection -->
+                        <version>${sonar-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sonar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
